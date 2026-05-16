@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ServiceControl: dashboard simples para controle de ordens de serviço." />
+  <title>ServiceControl | Dashboard de Serviços</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+      <div>
+        <strong>Service<span>Control</span></strong>
+        <small>Ordens de Serviço</small>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a href="#dashboard" class="active"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+      <a href="#nova-os"><i class="fa-solid fa-plus"></i> Nova OS</a>
+      <a href="#lista-os"><i class="fa-solid fa-list-check"></i> Serviços</a>
+      <a href="#relatorio"><i class="fa-solid fa-chart-pie"></i> Relatório</a>
+    </nav>
+
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div>
+        <h1>Dashboard de Serviços</h1>
+        <p>Controle simples de clientes, prazos, status e ordens de serviço.</p>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </header>
+
+    <section class="cards" id="dashboard">
+      <article class="stat-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-clipboard-list"></i></div>
+        <div>
+          <span>Total de serviços</span>
+          <strong id="totalServices">0</strong>
+        </div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon orange"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div>
+          <span>Pendentes</span>
+          <strong id="pendingServices">0</strong>
+        </div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon purple"><i class="fa-solid fa-spinner"></i></div>
+        <div>
+          <span>Em andamento</span>
+          <strong id="progressServices">0</strong>
+        </div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+        <div>
+          <span>Concluídos</span>
+          <strong id="doneServices">0</strong>
+        </div>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel form-panel" id="nova-os">
+        <div class="panel-header">
+          <div>
+            <span class="tag">Cadastro</span>
+            <h2 id="formTitle">Nova ordem de serviço</h2>
+          </div>
+          <button class="btn-secondary" id="clearFormBtn" type="button">Limpar</button>
+        </div>
+
+        <form id="serviceForm" class="service-form">
+          <input type="hidden" id="serviceId" />
+
+          <div class="form-group">
+            <label for="clientName">Cliente</label>
+            <input type="text" id="clientName" placeholder="Ex: Marcos Silva" required />
+          </div>
+
+          <div class="form-group">
+            <label for="clientPhone">Telefone</label>
+            <input type="tel" id="clientPhone" placeholder="(41) 99999-9999" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="serviceType">Serviço</label>
+              <select id="serviceType" required>
+                <option value="">Selecione</option>
+                <option value="Toldos">Toldos</option>
+                <option value="CFTV">CFTV</option>
+                <option value="Pintura">Pintura</option>
+                <option value="Construção">Construção</option>
+                <option value="Manutenção">Manutenção</option>
+                <option value="Ar-condicionado">Ar-condicionado</option>
+                <option value="Portões">Portões</option>
+                <option value="Outros">Outros</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="serviceStatus">Status</label>
+              <select id="serviceStatus" required>
+                <option value="Pendente">Pendente</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Concluído">Concluído</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="serviceDate">Data</label>
+              <input type="date" id="serviceDate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="servicePrice">Valor estimado</label>
+              <input type="number" id="servicePrice" placeholder="Ex: 350" min="0" step="0.01" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="serviceDescription">Descrição</label>
+            <textarea id="serviceDescription" rows="4" placeholder="Descreva o serviço solicitado..." required></textarea>
+          </div>
+
+          <button class="btn-main" type="submit">
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar ordem de serviço
+          </button>
+        </form>
+      </article>
+
+      <article class="panel" id="relatorio">
+        <div class="panel-header">
+          <div>
+            <span class="tag">Resumo</span>
+            <h2>Relatório rápido</h2>
+          </div>
+        </div>
+
+        <div class="report-box">
+          <div class="circle-progress">
+            <span id="completionRate">0%</span>
+          </div>
+          <h3>Taxa de conclusão</h3>
+          <p>Porcentagem de serviços marcados como concluídos.</p>
+        </div>
+
+        <div class="mini-list" id="typeSummary"></div>
+      </article>
+    </section>
+
+    <section class="panel table-panel" id="lista-os">
+      <div class="panel-header table-header">
+        <div>
+          <span class="tag">Gerenciamento</span>
+          <h2>Ordens cadastradas</h2>
+        </div>
+
+        <div class="filters">
+          <input type="search" id="searchInput" placeholder="Buscar cliente ou serviço..." />
+          <select id="statusFilter">
+            <option value="all">Todos</option>
+            <option value="Pendente">Pendentes</option>
+            <option value="Em andamento">Em andamento</option>
+            <option value="Concluído">Concluídos</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Serviço</th>
+              <th>Data</th>
+              <th>Valor</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="servicesTable"></tbody>
+        </table>
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        <i class="fa-solid fa-folder-open"></i>
+        <h3>Nenhuma ordem encontrada</h3>
+        <p>Cadastre uma nova ordem de serviço ou ajuste os filtros.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
