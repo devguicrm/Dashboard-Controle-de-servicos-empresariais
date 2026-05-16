@@ -23,10 +23,6 @@ Dashboard front-end desenvolvido para controle simples de ordens de serviço, id
 - LocalStorage
 - Font Awesome
 
-## Como executar
-
-Abra o arquivo `index.html` no navegador.
-
 ## Possíveis melhorias futuras
 
 - Integração com backend
