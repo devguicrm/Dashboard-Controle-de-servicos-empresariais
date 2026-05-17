@@ -1,36 +1,3 @@
-const defaultServices = [
-  {
-    id: crypto.randomUUID(),
-    clientName: 'Marcos Almeida',
-    clientPhone: '(41) 99999-0101',
-    serviceType: 'Portões',
-    serviceStatus: 'Pendente',
-    serviceDate: '2026-05-20',
-    servicePrice: 450,
-    serviceDescription: 'Manutenção em portão residencial com ajuste de motor.'
-  },
-  {
-    id: crypto.randomUUID(),
-    clientName: 'Comercial Atlântico',
-    clientPhone: '(41) 98888-2222',
-    serviceType: 'Pintura',
-    serviceStatus: 'Em andamento',
-    serviceDate: '2026-05-22',
-    servicePrice: 1200,
-    serviceDescription: 'Pintura interna de sala comercial.'
-  },
-  {
-    id: crypto.randomUUID(),
-    clientName: 'Residencial Ilha Verde',
-    clientPhone: '(41) 97777-3333',
-    serviceType: 'Manutenção',
-    serviceStatus: 'Concluído',
-    serviceDate: '2026-05-12',
-    servicePrice: 300,
-    serviceDescription: 'Reparo em área de churrasqueira e limpeza final.'
-  }
-];
-
 const storageKey = 'servicecontrol-services';
 const themeKey = 'servicecontrol-theme';
 
@@ -54,7 +21,7 @@ const sidebar = document.getElementById('sidebar');
 const menuToggle = document.getElementById('menuToggle');
 const themeToggle = document.getElementById('themeToggle');
 
-let services = JSON.parse(localStorage.getItem(storageKey)) || defaultServices;
+let services = JSON.parse(localStorage.getItem(storageKey)) || [];
 
 function saveServices() {
   localStorage.setItem(storageKey, JSON.stringify(services));
@@ -118,6 +85,7 @@ function renderTable() {
 
   filtered.forEach((service) => {
     const row = document.createElement('tr');
+
     row.innerHTML = `
       <td>
         <strong>${service.clientName}</strong>
@@ -141,6 +109,7 @@ function renderTable() {
         </div>
       </td>
     `;
+
     servicesTable.appendChild(row);
   });
 }
@@ -157,13 +126,16 @@ function renderStats() {
   document.getElementById('progressServices').textContent = progress;
   document.getElementById('doneServices').textContent = done;
   document.getElementById('completionRate').textContent = `${rate}%`;
-  document.querySelector('.circle-progress').style.background = `conic-gradient(var(--green) ${rate * 3.6}deg, var(--line) 0deg)`;
+
+  document.querySelector('.circle-progress').style.background =
+    `conic-gradient(var(--green) ${rate * 3.6}deg, var(--line) 0deg)`;
 
   renderTypeSummary();
 }
 
 function renderTypeSummary() {
   const typeSummary = document.getElementById('typeSummary');
+
   const counts = services.reduce((acc, service) => {
     acc[service.serviceType] = (acc[service.serviceType] || 0) + 1;
     return acc;
@@ -256,13 +228,19 @@ menuToggle.addEventListener('click', () => {
 
 themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('dark');
+
   const isDark = document.body.classList.contains('dark');
+
   localStorage.setItem(themeKey, isDark ? 'dark' : 'light');
-  themeToggle.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+
+  themeToggle.innerHTML = isDark
+    ? '<i class="fa-solid fa-sun"></i>'
+    : '<i class="fa-solid fa-moon"></i>';
 });
 
 function loadTheme() {
   const theme = localStorage.getItem(themeKey);
+
   if (theme === 'dark') {
     document.body.classList.add('dark');
     themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
@@ -270,5 +248,4 @@ function loadTheme() {
 }
 
 loadTheme();
-saveServices();
 renderApp();
